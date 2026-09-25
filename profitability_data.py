@@ -116,9 +116,8 @@ def top_10_profitable_potions(
     return calculate_profitability(potions, ingredients, diluants).head(10)
 
 
-def load_profitability_data(
-    workbook_path: str | Path = "data/potions-craft.xlsx",
-) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+
+def load_profitability_data(workbook_path = "data/potions-craft.xlsx",):
     workbook_path = Path(workbook_path)
     return (
         pd.read_excel(workbook_path, sheet_name="potions"),
