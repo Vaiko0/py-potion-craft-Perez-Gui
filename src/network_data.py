@@ -13,7 +13,6 @@ MATCH_CUTOFF = 0.85
 
 
 def _key(text: str) -> str:
-    """Cle de comparaison : sans accents, minuscules, uniquement des lettres."""
     text = unicodedata.normalize("NFKD", str(text).lower())
     return "".join(c for c in text if c.isalpha())
 
@@ -26,7 +25,6 @@ def load_network_data(workbook_path="data/potions-craft.xlsx"):
 
 
 def build_inventor_reference(inventors: pd.DataFrame) -> dict:
-    """cle normalisee -> (nom canonique, lignee), depuis liste-inventeurs."""
     reference = {}
     for _, row in inventors.iterrows():
         name = f"{row['pseudo']} {row['lignee']}".strip()
