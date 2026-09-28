@@ -29,5 +29,5 @@ figure.update_layout(
 st.plotly_chart(figure, use_container_width=True)
 
 if not anomalies.empty:
-    st.subheader("Potions non affichées")
-    st.dataframe(anomalies[["potion", "type", "valeur", "action"]].drop_duplicates())
+    with st.expander("Potions non affichées"):
+        st.dataframe(anomalies[["potion", "type", "valeur", "action"]].drop_duplicates())
