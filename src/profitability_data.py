@@ -1,6 +1,6 @@
 from pathlib import Path
 import pandas as pd
-from convert_units import convert_to_pincee
+from src.convert_units import convert_to_pincee
 
 _anomalies: list[dict[str, str]] = []
 
