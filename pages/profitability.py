@@ -3,7 +3,7 @@ import streamlit as st
 from profitability_data import (get_anomalies, load_profitability_data, top_10_profitable_potions)
 
 
-st.title("Potions Profitability")
+st.title("Rentabillité des potions")
 
 potions, ingredients, diluants = load_profitability_data()
 top_potions = top_10_profitable_potions(potions, ingredients, diluants)
@@ -16,7 +16,7 @@ figure = px.bar(
     orientation="h",
     text="benefice",
     labels={"benefice": "Profit", "potion": "Potion"},
-    title="Top 10 Most Profitable Potions",
+    title="Top 10 des potions les plus rentables",
 )
 figure.update_traces(texttemplate="%{text:.2f}", textposition="outside")
 figure.update_layout(
@@ -29,5 +29,5 @@ figure.update_layout(
 st.plotly_chart(figure, use_container_width=True)
 
 if not anomalies.empty:
-    st.subheader("Potions non affichees")
+    st.subheader("Potions non affichées")
     st.dataframe(anomalies[["potion", "type", "valeur", "action"]].drop_duplicates())
