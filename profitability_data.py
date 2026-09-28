@@ -1,7 +1,5 @@
 from pathlib import Path
-
 import pandas as pd
-
 from convert_units import convert_to_pincee
 
 _anomalies: list[dict[str, str]] = []
@@ -11,10 +9,8 @@ def get_anomalies() -> pd.DataFrame:
     return pd.DataFrame(_anomalies)
 
 
-def _log_anomaly(potion: str, type_: str, valeur: str, action: str) -> None:
-    _anomalies.append(
-        {"potion": potion, "type": type_, "valeur": valeur, "action": action}
-    )
+def _log_anomaly(potion: str, type_: str, valeur: str, action: str):
+    _anomalies.append({"potion": potion, "type": type_, "valeur": valeur, "action": action})
 
 
 def calculate_ingredient_cost(ingredient: str, quantity: float, unit: str, ingredients: pd.DataFrame):

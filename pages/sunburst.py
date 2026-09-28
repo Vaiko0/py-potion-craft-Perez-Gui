@@ -10,7 +10,7 @@ MAGIC_COLORS = {
     "Verte": "#3DDC84",
     "Pourpre": "#B366E0",
     "Rouge": "#FF5C5C",
-    "Noire": "#8A8F98",
+    "Noire": "#54575B",
 }
 
 
@@ -20,7 +20,7 @@ def build_sunburst_figure(sunburst_data) -> go.Figure:
     for node_id, label in zip(sunburst_data["id"], sunburst_data["label"]):
         parts = node_id.split("::")
         colors.append(MAGIC_COLORS.get(parts[1], "#888888"))
-        texts.append("" if parts[0] == "potion" else label)
+        texts.append(label.replace("Potion", "P.").replace("Huile", "H."))
 
     figure = go.Figure(
         go.Sunburst(
@@ -28,7 +28,10 @@ def build_sunburst_figure(sunburst_data) -> go.Figure:
             labels=sunburst_data["label"],
             parents=sunburst_data["parent"],
             values=sunburst_data["value"],
-            marker=dict(colors=colors)
+            marker=dict(colors=colors),
+            text=texts,
+            textinfo="text",
+            insidetextorientation="radial",
         )
     )
     return figure

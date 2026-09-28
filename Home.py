@@ -6,9 +6,3 @@ st.set_page_config(
 )
 
 st.title("Potion Craft")
-
-st.markdown(
-    """
-
-    """
-)
