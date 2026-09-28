@@ -2,7 +2,7 @@
 import plotly.graph_objects as go
 import streamlit as st
 
-from potions_magic_type import build_sunburst_data, load_magic_type_data
+from src.potions_magic_type import build_sunburst_data, load_magic_type_data
 
 MAGIC_COLORS = {
     "Blanche": "#F5F5F5",

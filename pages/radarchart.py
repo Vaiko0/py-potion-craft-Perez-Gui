@@ -1,8 +1,8 @@
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-from potions_magic_type import load_magic_type_data
-from skills import load_skills
+from src.potions_magic_type import load_magic_type_data
+from src.skills import load_skills
 
 df_magic_types, df_potions_inventeurs = load_magic_type_data()
 df_skills = load_skills()

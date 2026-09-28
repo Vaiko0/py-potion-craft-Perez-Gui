@@ -1,6 +1,6 @@
 import plotly.express as px
 import streamlit as st
-from profitability_data import (get_anomalies, load_profitability_data, top_10_profitable_potions)
+from src.profitability_data import (get_anomalies, load_profitability_data, top_10_profitable_potions)
 
 
 st.title("Rentabillité des potions")
