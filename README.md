@@ -3,4 +3,5 @@
 ## Installation des dépendances : 
 ``pip install requirements.txt``
 
-potion removed from profit calculation : Potion de regain d'assurance
+## Lancement du projet :
+``streamlit run Home.py``
