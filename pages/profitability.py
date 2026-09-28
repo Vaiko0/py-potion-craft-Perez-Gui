@@ -1,16 +1,13 @@
 import plotly.express as px
 import streamlit as st
-
-from profitability_data import (
-    load_profitability_data,
-    top_10_profitable_potions,
-)
+from profitability_data import (get_anomalies, load_profitability_data, top_10_profitable_potions)
 
 
 st.title("Potions Profitability")
 
 potions, ingredients, diluants = load_profitability_data()
 top_potions = top_10_profitable_potions(potions, ingredients, diluants)
+anomalies = get_anomalies()
 
 figure = px.bar(
     top_potions,
@@ -30,3 +27,7 @@ figure.update_layout(
 )
 
 st.plotly_chart(figure, use_container_width=True)
+
+if not anomalies.empty:
+    st.subheader("Potions non affichees")
+    st.dataframe(anomalies[["potion", "type", "valeur", "action"]].drop_duplicates())

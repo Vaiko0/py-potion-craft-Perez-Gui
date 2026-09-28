@@ -8,7 +8,6 @@ _anomalies: list[dict[str, str]] = []
 
 
 def get_anomalies() -> pd.DataFrame:
-    """Retourne les anomalies detectees pendant le calcul de rentabilite."""
     return pd.DataFrame(_anomalies)
 
 
@@ -18,12 +17,7 @@ def _log_anomaly(potion: str, type_: str, valeur: str, action: str) -> None:
     )
 
 
-def calculate_ingredient_cost(
-    ingredient: str,
-    quantity: float,
-    unit: str,
-    ingredients: pd.DataFrame,
-) -> float | None:
+def calculate_ingredient_cost(ingredient: str, quantity: float, unit: str, ingredients: pd.DataFrame):
     ingredient_rows = ingredients[ingredients["ingredients"] == ingredient]
     if ingredient_rows.empty:
         return None
@@ -36,11 +30,7 @@ def calculate_ingredient_cost(
     return quantity_in_pincee / weight_in_pincee * price
 
 
-def calculate_potion_profit(
-    potion: pd.Series,
-    ingredients: pd.DataFrame,
-    diluants: pd.DataFrame,
-) -> dict[str, float | str] | None:
+def calculate_potion_profit(potion: pd.Series, ingredients: pd.DataFrame, diluants: pd.DataFrame,):
     potion_name = str(potion["potion"])
     ingredient_cost = 0.0
 
@@ -70,14 +60,6 @@ def calculate_potion_profit(
     diluant_cost = 0.0
     if not pd.isna(diluant_name):
         diluant_rows = diluants[diluants["diluant"] == diluant_name]
-        if diluant_rows.empty:
-            _log_anomaly(
-                potion=potion_name,
-                type_="diluant_inconnu",
-                valeur=str(diluant_name),
-                action="potion exclue du calcul de rentabilite",
-            )
-            return None
         diluant_cost = float(diluant_rows.iloc[0]["prix"])
 
     selling_price = float(potion["prix"])
@@ -93,34 +75,22 @@ def calculate_potion_profit(
     }
 
 
-def calculate_profitability(
-    potions: pd.DataFrame,
-    ingredients: pd.DataFrame,
-    diluants: pd.DataFrame,
-) -> pd.DataFrame:
+def calculate_profitability(potions: pd.DataFrame, ingredients: pd.DataFrame, diluants: pd.DataFrame,):
     results = [
         calculate_potion_profit(potion, ingredients, diluants)
         for _, potion in potions.iterrows()
     ]
     results = [r for r in results if r is not None]
-    return pd.DataFrame(results).sort_values("benefice", ascending=False).reset_index(
-        drop=True
-    )
+    return pd.DataFrame(results).sort_values("benefice", ascending=False).reset_index(drop=True)
 
 
-def top_10_profitable_potions(
-    potions: pd.DataFrame,
-    ingredients: pd.DataFrame,
-    diluants: pd.DataFrame,
-) -> pd.DataFrame:
+def top_10_profitable_potions(potions: pd.DataFrame, ingredients: pd.DataFrame, diluants: pd.DataFrame,):
     return calculate_profitability(potions, ingredients, diluants).head(10)
 
 
 
 def load_profitability_data(workbook_path = "data/potions-craft.xlsx",):
     workbook_path = Path(workbook_path)
-    return (
-        pd.read_excel(workbook_path, sheet_name="potions"),
-        pd.read_excel(workbook_path, sheet_name="liste-ingredients"),
-        pd.read_excel(workbook_path, sheet_name="prix-diluants"),
-    )
+    return (pd.read_excel(workbook_path, sheet_name="potions"), pd.read_excel(workbook_path, sheet_name="liste-ingredients"),
+        pd.read_excel(workbook_path, sheet_name="prix-diluants"))
+
